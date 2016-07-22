@@ -48,7 +48,7 @@ class Properties(object):
                 continue
 
             obj = self.context.unrestrictedTraverse(
-                item[pathkey].lstrip('/'), None)
+                str(item[pathkey].lstrip('/')), None)
             if obj is None:
                 # path doesn't exist
                 yield item

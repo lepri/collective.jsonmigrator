@@ -7,6 +7,12 @@ from Products.Archetypes.interfaces import IBaseObject
 from zope.interface import classProvides
 from zope.interface import implements
 
+try:
+    from plone.dexterity.interfaces import IDexterityContent
+    dexterity_available = True
+except:
+    dexterity_available = False
+
 
 class Mimetype(object):
 
@@ -54,7 +60,7 @@ class Mimetype(object):
                 yield item
                 continue
 
-            if IBaseObject.providedBy(obj):
+            if IBaseObject.providedBy(obj) or (dexterity_available and IDexterityContent.providedBy(obj)):
                 obj.setFormat(item[mimetypekey])
 
             yield item

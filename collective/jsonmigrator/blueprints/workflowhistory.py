@@ -9,6 +9,12 @@ from Products.CMFCore.utils import getToolByName
 from zope.interface import classProvides
 from zope.interface import implements
 
+try:
+    from plone.dexterity.interfaces import IDexterityContent
+    dexterity_available = True
+except:
+    dexterity_available = False
+
 
 class WorkflowHistory(object):
 
@@ -52,13 +58,13 @@ class WorkflowHistory(object):
                 continue
 
             obj = self.context.unrestrictedTraverse(
-                item[pathkey].lstrip('/'),
+                str(item[pathkey].lstrip('/')),
                 None)
             if obj is None or not getattr(obj, 'workflow_history', False):
                 yield item
                 continue
 
-            if IBaseObject.providedBy(obj):
+            if IBaseObject.providedBy(obj) or (dexterity_available and IDexterityContent.providedBy(obj)):
                 item_tmp = item
 
                 # get back datetime stamp and set the workflow history

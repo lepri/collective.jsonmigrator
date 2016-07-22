@@ -22,7 +22,7 @@ class Statistics(object):
     def __init__(self, transmogrifier, name, options, previous):
         self.stats = {'START_TIME': int(time.time()),
                       'TIME_LAST_STEP': 0,
-                      'STEP': options.get('log-step', 25),
+                      'STEP': int(options.get('log-step', 25)),
                       'OBJ_COUNT': 0,
                       'EXISTED': 0,
                       'ADDED': 0,

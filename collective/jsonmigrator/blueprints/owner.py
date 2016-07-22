@@ -52,13 +52,13 @@ class Owner(object):
                 continue
 
             obj = self.context.unrestrictedTraverse(
-                item[pathkey].lstrip('/'), None)
+                str(item[pathkey].lstrip('/')), None)
             if obj is None:             # path doesn't exist
                 yield item
                 continue
 
-            if not IBaseObject.providedBy(obj):
-                continue
+            # if not IBaseObject.providedBy(obj) or not (dexterity_available and IDexterityContent.providedBy(obj)):
+            #     continue
 
             if item[ownerkey][0] and item[ownerkey][1]:
                 try:
